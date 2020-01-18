@@ -175,15 +175,7 @@ public class USSDService extends AccessibilityService {
     }
 
     protected static void clickOnCancelButton(AccessibilityEvent event) {
-        for (AccessibilityNodeInfo leaf : getLeaves(event)) {
-            if (leaf.getClassName().toString().toLowerCase().contains("button")) {
-
-                if (leaf.getText().toString().contains("cancel")
-                || leaf.getText().toString().contains("end")) {
-                    leaf.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                }
-            }
-        }
+        clickOnButton(event, 0);
     }
 
     private static List<AccessibilityNodeInfo> getLeaves(AccessibilityEvent event) {
