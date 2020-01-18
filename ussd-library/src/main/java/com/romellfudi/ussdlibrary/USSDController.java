@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Toast;
 
@@ -209,11 +210,15 @@ public class USSDController implements USSDInterface, USSDApi {
             if (context instanceof Activity) {
                 openSettingsAccessibility((Activity) context);
             } else {
-                Toast.makeText(
-                        context,
-                        "voipUSSD accessibility service is not enabled",
-                        Toast.LENGTH_LONG
-                ).show();
+                try {
+                    Toast.makeText(
+                            context,
+                            "voipUSSD accessibility service is not enabled",
+                            Toast.LENGTH_LONG
+                    ).show();
+                } catch (Exception e){
+                    Log.e("VerifyService", "Accessibility not enabled and cannot toast.");
+                }
             }
         }
         return isEnabled;
