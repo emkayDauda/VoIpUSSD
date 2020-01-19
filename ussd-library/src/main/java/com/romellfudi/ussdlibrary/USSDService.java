@@ -54,9 +54,9 @@ public class USSDService extends AccessibilityService {
         }else if (isUSSDWidget(event)) {
             // ready for work
             String response = event.getText().get(0).toString();
-            if (response.contains("\n")) {
-                response = response.substring(response.indexOf('\n') + 1);
-            }
+//            if (response.contains("\n")) {
+//                response = response.substring(response.indexOf('\n') + 1);
+//            }
             if (notInputText(event)) {
                 // not more input panels / LAST MESSAGE
                 // sent 'OK' button
@@ -84,6 +84,8 @@ public class USSDService extends AccessibilityService {
         setTextIntoField(event, text);
         clickOnButton(event, 1);
     }
+
+    public static void cancelSession() { clickOnCancelButton(event); }
 
     /**
      * set text into input text at USSD widget
@@ -170,6 +172,10 @@ public class USSDService extends AccessibilityService {
                 }
             }
         }
+    }
+
+    protected static void clickOnCancelButton(AccessibilityEvent event) {
+        clickOnButton(event, 0);
     }
 
     private static List<AccessibilityNodeInfo> getLeaves(AccessibilityEvent event) {

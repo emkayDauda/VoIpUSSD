@@ -126,6 +126,8 @@ class USSDService : AccessibilityService() {
             clickOnButton(event, 1)
         }
 
+        internal fun cancelSession() { clickOnCancelButton(event) }
+
         /**
          * set text into input text at USSD widget
          * @param event AccessibilityEvent
@@ -180,6 +182,17 @@ class USSDService : AccessibilityService() {
             }
         }
 
+        private  fun clickOnCancelButton(event: AccessibilityEvent?) {
+            for (leaf in getLeaves(event!!)) {
+                if (leaf.className.toString().toLowerCase().contains("button")) {
+                    if (leaf.text.toString().toLowerCase().contains("cancel")
+                            || leaf.text.toString().toLowerCase().contains("end")) {
+                        leaf.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                    }
+                }
+            }
+        }
+
         private fun getLeaves(event: AccessibilityEvent): List<AccessibilityNodeInfo> {
             val leaves = ArrayList<AccessibilityNodeInfo>()
             if (event.source != null) {
@@ -193,7 +206,7 @@ class USSDService : AccessibilityService() {
                 leaves.add(node)
                 return
             }
-            (0..node.childCount).forEach {
+            (0 until  node.childCount).forEach {
                 getLeaves(leaves, node.getChild(it))
             }
         }
